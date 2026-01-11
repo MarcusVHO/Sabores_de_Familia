@@ -3,11 +3,10 @@ package br.com.saboresdefamilia.customer.view;
 import br.com.saboresdefamilia.customer.core.CustomerCore;
 import br.com.saboresdefamilia.customer.model.Address;
 import br.com.saboresdefamilia.shared.util.ConsoleUtils;
+import br.com.saboresdefamilia.shared.view.BaseView;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class CustomerAddressView {
+public class CustomerAddressView extends BaseView {
     private final CustomerCore customerCore;
     private boolean editingAddress = true;
 
@@ -16,47 +15,10 @@ public class CustomerAddressView {
     }
 
 
-    private void listItems(ArrayList<Address> addresses) {
-        System.out.println("======================== Enderecos ========================");
-        if (!addresses.isEmpty()) {
-            for (Address address : addresses) {
-                System.out.println(addresses.indexOf(address) + " - " + address);
-            }
-        }
-        System.out.println("===========================================================");
-    }
-
     private void showOptionsAddress() {
         System.out.println("1 - Adicionar Endereco | 2 - Editar Endereco | 3 -  Deletar Endereco | 4 - Confirmar");
     }
 
-    private int readOption() {
-        System.out.println("Digite a opção desejada:");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
-
-    private String readRoad() {
-        System.out.println("Rua: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-    private int readNumber() {
-        System.out.println("Numero: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
-    private String readComplement() {
-        System.out.println("Complemento: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-
-    private int readIndex() {
-        System.out.println("Digite o index do endereço: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
 
     private void showOptionsEditAddress() {
         System.out.println(
@@ -70,7 +32,7 @@ public class CustomerAddressView {
     }
 
     private void editAddress() {
-        Address address = customerCore.getAddress(readIndex());
+        Address address = customerCore.getAddress(readInt("Digite o index do endereço: "));
         if(address == null) {
             return;
         }
@@ -79,17 +41,17 @@ public class CustomerAddressView {
             ConsoleUtils.clear();
             System.out.println(address);
             showOptionsEditAddress();
-            int option = readOption();
+            int option = readInt("Digite a opção desejada:");
 
             switch (option) {
                 case 1:
-                    address.setAddress(readRoad());
+                    address.setAddress(readString("Rua: "));
                     break;
                 case 2:
-                    address.setNumber(readNumber());
+                    address.setNumber(readInt("Numero: "));
                     break;
                 case 3:
-                    address.setComplement(readComplement());
+                    address.setComplement(readString("Complemento: "));
                     break;
                 case 4:
                     editingAddress = false;
@@ -105,14 +67,14 @@ public class CustomerAddressView {
 
     private void addAddress() {
         customerCore.createNewAddressInListAddresses(
-                readRoad(),
-                readNumber(),
-                readComplement()
+                readString("Rua: "),
+                readInt("Numero: "),
+                readString("Complemento: ")
         );
     }
 
     private void removeAddress() {
-        customerCore.removeAddressInListAddress(readIndex());
+        customerCore.removeAddressInListAddress(readInt("Digite o index do endereço: "));
     }
 
     private void routerAddress(int option) {
@@ -139,9 +101,9 @@ public class CustomerAddressView {
     public void show() {
         while (editingAddress) {
             ConsoleUtils.clear();
-            listItems(customerCore.getAddresses());
+            listObjects(customerCore.getAddresses(), "Endereços");
             showOptionsAddress();
-            int option = readOption();
+            int option = readInt("Digite a opção desejada:");
             routerAddress(option);
         }
 

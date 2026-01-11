@@ -2,7 +2,6 @@ package br.com.saboresdefamilia.customer.view;
 
 import br.com.saboresdefamilia.shared.view.MenuView;
 
-import java.util.Scanner;
 
 public class CustomerMenuView extends MenuView {
     protected void showTitle() {

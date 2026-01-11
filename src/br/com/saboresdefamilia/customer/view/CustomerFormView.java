@@ -1,8 +1,9 @@
 package br.com.saboresdefamilia.customer.view;
 import br.com.saboresdefamilia.customer.core.CustomerCore;
-import java.util.Scanner;
+import br.com.saboresdefamilia.shared.view.BaseView;
 
-public class CustomerFormView {
+
+public class CustomerFormView extends BaseView {
     private final CustomerCore customerCore = new CustomerCore();
     private final CustomerAddressView customerAddressView = new CustomerAddressView(customerCore);
     private final CustomerPhoneView customerPhoneView = new CustomerPhoneView(customerCore);
@@ -19,21 +20,10 @@ public class CustomerFormView {
                """);
     }
 
-    private String readName() {
-        System.out.print("Nome: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
-
-    private String readDescription() {
-        System.out.print("Descricao: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextLine();
-    }
 
     private void createNewCustomer(){
-        String name = readName();
-        String description =  readDescription();
+        String name = readString("Nome: ");
+        String description =  readString("Descricao: ");
         customerCore.createNewCustomer(name, description);
     }
 

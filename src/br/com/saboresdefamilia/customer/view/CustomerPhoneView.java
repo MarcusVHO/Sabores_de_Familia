@@ -3,11 +3,11 @@ package br.com.saboresdefamilia.customer.view;
 import br.com.saboresdefamilia.customer.core.CustomerCore;
 import br.com.saboresdefamilia.customer.model.Phone;
 import br.com.saboresdefamilia.shared.util.ConsoleUtils;
+import br.com.saboresdefamilia.shared.view.BaseView;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
-public class CustomerPhoneView {
+
+public class CustomerPhoneView extends BaseView {
     private final CustomerCore customerCore;
     private boolean editingPhone = true;
 
@@ -15,52 +15,24 @@ public class CustomerPhoneView {
         this.customerCore = customerCore;
     }
 
-    private void listItems(ArrayList<Phone> phones) {
-        System.out.println("======================== Phone ========================");
-        if (!phones.isEmpty()) {
-            for (Phone phone : phones) {
-                System.out.println(phones.indexOf(phone) + " - " + phone);
-            }
-        }
-        System.out.println("========================================================");
-    }
-
     private void showOptionsPhone() {
         System.out.println("1 - Adicionar Telefone | 2 - Editar Telefone | 3 -  Deletar Telefone | 4 - Confirmar");
     }
 
-    private int readOption() {
-        System.out.println("Digite a opção desejada: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
-
-    private int readPhone(){
-        System.out.println("Numero de Telefone: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
-
-    private int readIndex() {
-        System.out.println("Digite o index do endereço: ");
-        Scanner scanner = new Scanner(System.in);
-        return scanner.nextInt();
-    }
-
     private void editPhone() {
-        Phone phone = customerCore.getPhone(readIndex());
+        Phone phone = customerCore.getPhone(readInt("Digite o index do endereço: "));
         if (phone == null) {
             return;
         }
-        phone.setPhone(readPhone());
+        phone.setPhone(readInt("Numero de Telefone:"));
     }
 
     private void addPhone() {
-        customerCore.createNewPhoneInListPhones(readPhone());
+        customerCore.createNewPhoneInListPhones(readInt("Numero de Telefone:"));
     }
 
     private void removePhone() {
-        customerCore.removePhoneInListPhones(readIndex());
+        customerCore.removePhoneInListPhones(readInt("Digite o index do endereço: "));
     }
 
     private void routerPhone(int option) {
@@ -86,9 +58,9 @@ public class CustomerPhoneView {
     public void show() {
         while (editingPhone) {
             ConsoleUtils.clear();
-            listItems(customerCore.getPhones());
+            listObjects(customerCore.getPhones(), "Telefones");
             showOptionsPhone();
-            int option = readOption();
+            int option = readInt("Digite a opcão desejada: ");
             routerPhone(option);
         }
 
