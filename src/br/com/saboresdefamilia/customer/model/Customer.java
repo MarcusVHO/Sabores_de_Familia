@@ -28,4 +28,9 @@ public class Customer {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return getName() + " |  " + getDescription();
+    }
 }

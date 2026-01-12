@@ -1,5 +1,6 @@
 package br.com.saboresdefamilia.customer.core;
 
+import br.com.saboresdefamilia.customer.dto.CompleteCustomerDTO;
 import br.com.saboresdefamilia.customer.model.Address;
 import br.com.saboresdefamilia.customer.model.Customer;
 import br.com.saboresdefamilia.customer.model.Phone;
@@ -9,10 +10,19 @@ import java.util.ArrayList;
 
 public class CustomerCore {
     private Customer customer;
-    private final ArrayList<Address> addresses = new ArrayList<>();
-    private final ArrayList<Phone> phones = new ArrayList<>();
+    private  ArrayList<Address> addresses = new ArrayList<>();
+    private ArrayList<Phone> phones = new ArrayList<>();
 
+    private ArrayList<Customer> searchResultCustomer = new ArrayList<>();
+    private CompleteCustomerDTO completeCustomerDTO;
 
+    public void setPhones(ArrayList<Phone> phones) {
+        this.phones = phones;
+    }
+
+    public void setAddresses(ArrayList<Address> addresses) {
+        this.addresses = addresses;
+    }
 
     public ArrayList<Address> getAddresses() {
         return addresses;
@@ -63,6 +73,35 @@ public class CustomerCore {
     public void registerNewCustomerInDb() {
         CustomerService.registerNewCustomerInDatabase(customer, addresses, phones);
     }
+
+    public void searchCustomerByName(String name) {
+        searchResultCustomer = CustomerService.listUsersByName(name);
+    }
+
+    public ArrayList<Customer> getResultSearchCustomers() {
+        return searchResultCustomer;
+    }
+
+    public Customer getCustomerinSearchList(int index) {
+        if (searchResultCustomer.size() >= index) {
+            return searchResultCustomer.get(index);
+        }
+        return null;
+    }
+
+    public void setCurrentEditCustomer(Customer customer) {
+        this.completeCustomerDTO = CustomerService.getCompleteCustomerByCustomer(customer);
+    }
+
+    public CompleteCustomerDTO getCompleteCustomerDTO() {
+        return completeCustomerDTO;
+    }
+
+    public void updateUser() {
+        CustomerService.updateUserDataInDatabase(completeCustomerDTO);
+    }
+
+
 }
 
 

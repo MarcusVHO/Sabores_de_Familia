@@ -37,11 +37,13 @@ public class CustomerMenuView extends MenuView {
                 break;
 
             case 2:
-                System.out.println("Pesquisar Cliente");
+                CustomerSearchView customerSearchView = new CustomerSearchView();
+                customerSearchView.searchCustomer();
                 break;
 
             case 3:
-                System.out.println("Editar Cliente");
+                CustomerEditView customerEditView = new CustomerEditView();
+                customerEditView.editCustomer();
                 break;
 
             case 4:

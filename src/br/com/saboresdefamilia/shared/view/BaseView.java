@@ -14,11 +14,14 @@ public class BaseView {
         return scanner.nextLine();
     }
 
-    public int readInt(String message) {
+    public Integer readInt(String message) {
         System.out.println(message);
-        int number = scanner.nextInt();
-        scanner.nextLine();
-        return number;
+        String number = scanner.nextLine();
+        if (number.isBlank()) {
+            return null;
+        }
+
+        return Integer.parseInt(number);
     }
 
     public void listObjects(ArrayList<?> objects, String title) {
