@@ -1,8 +1,8 @@
 package br.com.saboresdefamilia.shared.view;
 
 import br.com.saboresdefamilia.customer.view.CustomerMenuView;
+import br.com.saboresdefamilia.menu.view.MenuMenuView;
 
-import java.util.Scanner;
 
 public class MainMenuView extends MenuView {
 
@@ -47,6 +47,8 @@ public class MainMenuView extends MenuView {
                 customerMenuView.showMenu();
                 break;
             case 3:
+                MenuMenuView menuMenuView = new MenuMenuView();
+                menuMenuView.showMenu();
                 break;
             case 4:
                 break;

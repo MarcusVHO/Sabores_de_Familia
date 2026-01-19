@@ -12,6 +12,19 @@ public class CustomerEditView extends BaseView {
     private final CustomerAddressView customerAddressView = new CustomerAddressView(customerCore);
     private final CustomerPhoneView customerPhoneView = new CustomerPhoneView(customerCore);
 
+    private void showTitle() {
+        System.out.println(
+                """
+                ███████╗██████╗ ██╗████████╗ █████╗ ██████╗      ██████╗██╗     ██╗███████╗███╗   ██╗████████╗███████╗
+                ██╔════╝██╔══██╗██║╚══██╔══╝██╔══██╗██╔══██╗    ██╔════╝██║     ██║██╔════╝████╗  ██║╚══██╔══╝██╔════╝
+                █████╗  ██║  ██║██║   ██║   ███████║██████╔╝    ██║     ██║     ██║█████╗  ██╔██╗ ██║   ██║   █████╗ \s
+                ██╔══╝  ██║  ██║██║   ██║   ██╔══██║██╔══██╗    ██║     ██║     ██║██╔══╝  ██║╚██╗██║   ██║   ██╔══╝ \s
+                ███████╗██████╔╝██║   ██║   ██║  ██║██║  ██║    ╚██████╗███████╗██║███████╗██║ ╚████║   ██║   ███████╗
+                ╚══════╝╚═════╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝     ╚═════╝╚══════╝╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚══════╝
+                """
+        );
+    }
+
     private void showOptions() {
         System.out.println(
                 """
@@ -32,6 +45,8 @@ public class CustomerEditView extends BaseView {
         if (Objects.equals(searchName, "")) {
             return;
         }
+
+        ConsoleUtils.clear();
 
         customerCore.searchCustomerByName(searchName);
         listObjects(customerCore.getResultSearchCustomers(), "Clientes");
@@ -67,8 +82,13 @@ public class CustomerEditView extends BaseView {
 
     private void editing() {
         while (true) {
+            ConsoleUtils.clear();
+            showTitle();
             showOptions();
-            int option = readInt("Digite a opcao desejada: ");
+            Integer option = readInt("Digite a opcao desejada: ");
+            if(option == null) {
+                continue;
+            }
             switch (option) {
                 case 1:
                     editName();
@@ -91,7 +111,7 @@ public class CustomerEditView extends BaseView {
 
                 default:
                     System.out.println("Opcao Invalida!!");
-                    break;
+                    break; 
 
             }
         }
